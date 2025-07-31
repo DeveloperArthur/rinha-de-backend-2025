@@ -1,7 +1,52 @@
-(ns rinha-de-backend-2025.database)
+(ns rinha-de-backend-2025.database
+  (:require [next.jdbc :as jdbc]
+            [cheshire.core :as cheshire]))
 
-(defn save-processed-payment []
+(def db-config
+  {:dbtype   "postgresql"
+   :dbname   "root"
+   :host     "localhost"
+   :user     "root"
+   :password "root"})
+
+(def db (jdbc/get-datasource db-config))
+
+(defn save-processed-payment [response processor_name]
+  (jdbc/execute! db [(str "INSERT INTO processed_payments (processor_name, processed_at, amount)
+                           VALUES ('" processor_name "',
+                           '" (:requestedAt response) "',
+                           " (:amount response) ")")])
   (println "Saving processed payment to the database..."))
 
-(defn save-pendent-payment []
-  (println "Saving pendent payment to the database..."))
+(defn json-to-map [request]
+  (cheshire/parse-string (slurp (:body request)) true))
+
+(defn save-pendent-payment [request]
+  ;nao posso salvar o processor_name pq nao sei qual vai ser
+  ; nao posso salvar o processed_at pq nao sei quando vai ser
+  ; correlationId eu preciso pra enviar depois
+  ;com correlatioid e amount, na hora de processar eu gero a data e envio, deu certo? persisto no banco e ja era
+  (let [body (json-to-map request)]
+    (jdbc/execute! db [(str "INSERT INTO sync_pendents_payments (correlation_id, amount)
+                            VALUES ('" (:correlationId body) "'," (:amount body) ")")]))
+    (println "Saving pendent payment to sync background..."))
+
+(defn get-payments-summary []
+  ; filtrando por processed_at tras todos os que tem processor_name "default", conta todos os registros, e soma todos os amount
+  ; repete a mesma query com fallback
+
+  ;monta o json
+
+  ;HTTP 200 - Ok
+  ;{
+  ; "default" : {
+  ;              "totalRequests": 43236,
+  ;              "totalAmount": 415542345.98
+  ;              },
+  ; "fallback" : {
+  ;               "totalRequests": 423545,
+  ;               "totalAmount": 329347.34
+  ;               }
+  ; }
+
+  )

@@ -26,7 +26,10 @@
                                    :conn-timeout   timeout})]
 
         (println "Status:" (:status response))
-        (println "Body:" (cheshire/parse-string (:body response) true))))))
+        (println "Body:" (cheshire/parse-string (:body response) true))
+        {:correlationId (:correlationId body)
+         :amount        (:amount body)
+         :requestedAt   (:requestedAt body)}))))
 
 (defn send-payment-to-default [request, requestedAt]
   (println "Using default payment processor")

@@ -10,5 +10,7 @@
                  [org.clojure/data.json "0.2.6"]
                  [org.slf4j/slf4j-simple "1.7.28"]
                  [cheshire "6.0.0"]
-                 [clj-http "3.13.1"]]
+                 [clj-http "3.13.1"]
+                 [com.github.seancorfield/next.jdbc "1.3.1048"]
+                 [org.postgresql/postgresql "42.2.10"]]
   :repl-options {:init-ns rinha-de-backend-2025.core})
