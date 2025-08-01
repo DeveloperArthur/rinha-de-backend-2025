@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="79aa879c-b5c5-4f9a-a317-c0ef1ce2d2b9" name="Changes" comment="feat: realizado teste de todo fluxo ponta a ponta com sucesso" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Clojure Namespace" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2zbagCyKIDWM0t2iR88iB3rQ0sD" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "Clojure REPL.REPL for rinha-de-backend-2025.executor": "Run",
+    "Docker.docker-compose.yml.payment-processor-1: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml.payment-processor-db-1: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml.payment-processor-db-2: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml.pgadmin-compose: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml.postgres: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml: Compose Deployment.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+    "cursive.last.file.extension./Users/arthurdossantosalmeida/projetos/rinha-de-backend-2025/src": "clj",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/arthurdossantosalmeida/projetos/rinha-de-backend-2025",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/assets" />
+    </key>
+  </component>
+  <component name="ReplState" timestamp="1754076696906">{:repl-history {:ide [], :local [{:command &quot;(jdbc/execute! db [\&quot;insert into processed_payments (processor_name, processed_at, amount)\n  values('fallback','2025-07-15T12:34:56.000Z', 123.45)\&quot;])&quot;, :offset 148, :ns &quot;rinha-de-backend-2025.database&quot;} {:command &quot;(jdbc/execute! db [\&quot;select * from processed_payments\&quot;])&quot;, :offset 55, :ns &quot;rinha-de-backend-2025.database&quot;} {:command &quot;(ns rinha-de-backend-2025.database\n  (:require [next.jdbc :as jdbc]))\n&quot;, :offset 70, :ns &quot;rinha-de-backend-2025.core&quot;} {:command &quot;(def db-config\n  {:dbtype   \&quot;postgresql\&quot;\n   :dbname   \&quot;root\&quot;\n   :host     \&quot;localhost\&quot;\n   :user     \&quot;root\&quot;\n   :password \&quot;root\&quot;})&quot;, :offset 127, :ns &quot;rinha-de-backend-2025.database&quot;} {:command &quot;(def db (jdbc/get-datasource db-config))&quot;, :offset 40, :ns &quot;rinha-de-backend-2025.database&quot;} {:command &quot;(defn save-processed-payment [response processor_name]\n  (jdbc/execute! db [(str \&quot;INSERT INTO processed_payments (processor_name, processed_at, amount)\n                           VALUES (\&quot; processor_name \&quot;,\&quot; (:requestedAt response) \&quot;,\&quot; (:amount response))])\n  (println \&quot;Saving processed payment to the database...\&quot;))&quot;, :offset 316, :ns &quot;rinha-de-backend-2025.database&quot;} {:command &quot;(defn save-processed-payment [response processor_name]\n  (jdbc/execute! db [(str \&quot;INSERT INTO processed_payments (processor_name, processed_at, amount)\n                           VALUES ('\&quot;processor_name\&quot;','\&quot;(:requestedAt response)\&quot;',\&quot;(:amount response))])\n  (println \&quot;Saving processed payment to the database...\&quot;))&quot;, :offset 315, :ns &quot;rinha-de-backend-2025.database&quot;} {:command &quot;(defn save-processed-payment [response processor_name]\n  (let [query (str \&quot;INSERT INTO processed_payments (processor_name, processed_at, amount)\n                           VALUES ('\&quot;processor_name\&quot;','\&quot;(:requestedAt response)\&quot;',\&quot;(:amount response))]\n\n    (println \&quot;Executing query:\&quot; query))\n\n\n\n  (jdbc/execute! db [(str \&quot;INSERT INTO processed_payments (processor_name, processed_at, amount)\n                           VALUES ('\&quot;processor_name\&quot;','\&quot;(:requestedAt response)\&quot;',\&quot;(:amount response))])\n  (println \&quot;Saving processed payment to the database...\&quot;))&quot;, :offset 553, :ns &quot;rinha-de-backend-2025.database&quot;} {:command &quot;(defn save-processed-payment [response processor_name]\n  (let [query (str \&quot;INSERT INTO processed_payments (processor_name, processed_at, amount)\n                           VALUES ('\&quot;processor_name\&quot;','\&quot;(:requestedAt response)\&quot;',\&quot;(:amount response))]\n\n    (println \&quot;Executing query:\&quot; query))\n\n\n\n  (jdbc/execute! db [(str \&quot;INSERT INTO processed_payments (processor_name, processed_at, amount)\n                           VALUES ('\&quot;processor_name\&quot;','\&quot;(:requestedAt response)\&quot;',\&quot;(:amount response)\&quot;)\&quot;)])\n  (println \&quot;Saving processed payment to the database...\&quot;))&quot;, :offset 556, :ns &quot;rinha-de-backend-2025.database&quot;} {:command &quot;(defn save-processed-payment [response processor_name]\n  (jdbc/execute! db [(str \&quot;INSERT INTO processed_payments (processor_name, processed_at, amount)\n                           VALUES ('\&quot; processor_name \&quot;',\n                           '\&quot; (:requestedAt response) \&quot;',\n                           \&quot; (:amount response) \&quot;)\&quot;)])\n  (println \&quot;Saving processed payment to the database...\&quot;))\n&quot;, :offset 381, :ns &quot;rinha-de-backend-2025.database&quot;} {:command &quot;(save-processed-payment {:requestedAt \&quot;2025-07-15 12:34:56\&quot;\n                         :amount      13.8}\n                        \&quot;default\&quot;)&quot;, :offset 138, :ns &quot;rinha-de-backend-2025.database&quot;} {:command &quot;(ns rinha-de-backend-2025.database\n  (:require [next.jdbc :as jdbc]\n            [cheshire.core :as cheshire]))\n&quot;, :offset 111, :ns &quot;rinha-de-backend-2025.database&quot;} {:command &quot;(defn json-to-map [request]\n  (cheshire/parse-string (slurp (:body request)) true))&quot;, :offset 83, :ns &quot;rinha-de-backend-2025.database&quot;} {:command &quot;(defn save-pendent-payment [request]\n  ;nao posso salvar o processor_name pq nao sei qual vai ser\n  ; nao posso salvar o processed_at pq nao sei quando vai ser\n  ; correlationId eu preciso pra enviar depois\n  ;com correlatioid e amount, na hora de processar eu gero a data e envio, deu certo? persisto no banco e ja era\n  (let [body (json-to-map request)]\n    (jdbc/execute! db [str \&quot;INSERT INTO sync_pendents_payments (correlation_id, amount)\n                            VALUES ('\&quot; (:correlationId body) \&quot;',\&quot; (:amount body) \&quot;)\&quot;])\n    (println \&quot;Saving pendent payment to sync background...\&quot;)))&quot;, :offset 593, :ns &quot;rinha-de-backend-2025.database&quot;} {:command &quot;(save-pendent-payment\n  {:body (cheshire/generate-string {:correlationId \&quot;6471d700-a6ce-466e-8573-44f37307d95c\&quot;\n                                    :amount        100.0})})\n&quot;, :offset 173, :ns &quot;rinha-de-backend-2025.database&quot;} {:command &quot;(defn save-pendent-payment [request]\n  ;nao posso salvar o processor_name pq nao sei qual vai ser\n  ; nao posso salvar o processed_at pq nao sei quando vai ser\n  ; correlationId eu preciso pra enviar depois\n  ;com correlatioid e amount, na hora de processar eu gero a data e envio, deu certo? persisto no banco e ja era\n  (let [body (json-to-map request)]\n    (jdbc/execute! db [(str \&quot;INSERT INTO sync_pendents_payments (correlation_id, amount)\n                            VALUES ('\&quot; (:correlationId body) \&quot;',\&quot; (:amount body) \&quot;)\&quot;)]))\n    (println \&quot;Saving pendent payment to sync background...\&quot;))&quot;, :offset 595, :ns &quot;rinha-de-backend-2025.database&quot;} {:command &quot;(save-pendent-payment\n  {:body (java.io.StringReader. (cheshire/generate-string {:correlationId \&quot;6471d700-a6ce-466e-8573-44f37307d95c\&quot;\n                                                           :amount        100.0}))})\n&quot;, :offset 220, :ns &quot;rinha-de-backend-2025.database&quot;}], :remote []}}</component>
+  <component name="RunManager" selected="Clojure REPL.REPL for rinha-de-backend-2025">
+    <configuration default="true" type="Babashka" factoryName="BabashkaLocalRepl" activateToolWindowBeforeRun="false">
+      <setting name="displayName" value="" />
+      <setting name="bbPath" value="" />
+      <setting name="parameters" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <setting name="workingDir" value="" />
+      <setting name="focusEditor" value="false" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="REPL for rinha-de-backend-2025" type="ClojureREPL" factoryName="Local" activateToolWindowBeforeRun="false">
+      <option name="configVersion" value="1" />
+      <option name="displayName" value="REPL for rinha-de-backend-2025" />
+      <option name="execution" value="LEININGEN" />
+      <module name="rinha-de-backend-2025" />
+      <option name="options" />
+      <option name="profiles" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="ClojureREPL" factoryName="Local" activateToolWindowBeforeRun="false">
+      <option name="configVersion" value="1" />
+      <option name="options" />
+      <option name="profiles" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="ClojureREPL" factoryName="Remote" activateToolWindowBeforeRun="false">
+      <setting name="displayName" value="" />
+      <setting name="host" value="" />
+      <setting name="port" value="0" />
+      <setting name="replType" value="SOCKET" />
+      <setting name="configType" value="SPECIFY" />
+      <setting name="replPortFileType" value="STANDARD" />
+      <setting name="customPortFile" value="" />
+      <setting name="fixLineNumbers" value="false" />
+      <setting name="useHeartbeat" value="true" />
+      <setting name="focusEditor" value="false" />
+      <setting name="urlFile" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.payment-processor-1: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="payment-processor-1" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.payment-processor-db-1: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="payment-processor-db-1" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.payment-processor-db-2: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="payment-processor-db-2" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.pgadmin-compose: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="pgadmin-compose" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.postgres: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="postgres" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Docker.docker-compose.yml.payment-processor-db-2: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.payment-processor-db-1: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.payment-processor-1: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.pgadmin-compose: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.postgres: Compose Deployment" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.23654.189" />
+        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-IU-243.23654.189" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="79aa879c-b5c5-4f9a-a317-c0ef1ce2d2b9" name="Changes" comment="" />
+      <created>1752002341325</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1752002341325</updated>
+      <workItem from="1752002342615" duration="3470000" />
+      <workItem from="1752101035366" duration="11376000" />
+      <workItem from="1752948254304" duration="599000" />
+      <workItem from="1752956735088" duration="18523000" />
+      <workItem from="1753549804298" duration="22240000" />
+      <workItem from="1754077019696" duration="9000" />
+    </task>
+    <task id="LOCAL-00001" summary="feat: implementando chamadas para payment-processors com tratativa de erros">
+      <option name="closed" value="true" />
+      <created>1753212194230</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1753212194231</updated>
+    </task>
+    <task id="LOCAL-00002" summary="feat: implementando conexão com banco de dados postgres e implementando métodos para salvar registros de pagamentos processados e pendentes">
+      <option name="closed" value="true" />
+      <created>1753990551357</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1753990551357</updated>
+    </task>
+    <task id="LOCAL-00003" summary="feat: realizado teste de todo fluxo ponta a ponta com sucesso">
+      <option name="closed" value="true" />
+      <created>1754075696031</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1754075696031</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat: implementando chamadas para payment-processors com tratativa de erros" />
+    <MESSAGE value="feat: implementando conexão com banco de dados postgres e implementando métodos para salvar registros de pagamentos processados e pendentes" />
+    <MESSAGE value="feat: realizado teste de todo fluxo ponta a ponta com sucesso" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: realizado teste de todo fluxo ponta a ponta com sucesso" />
+  </component>
+</project>
