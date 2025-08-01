@@ -10,33 +10,29 @@
 (defn build-body [body, requestedAt]
   (cheshire/generate-string {:correlationId (:correlationId body)
                              :amount        (:amount body)
-                             :requestedAt   (.toString requestedAt)}))
+                             :requestedAt   requestedAt}))
 
-(defn json-to-map [request]
-  (cheshire/parse-string (slurp (:body request)) true))
+(defn send-payment [endpoint, timeout, body, requestedAt]
+  (let [request-json (build-body body requestedAt)]
+    (println "Processing payment with Request JSON:" request-json)
+    (let [response (client/post endpoint
+                                {:headers        {"Content-Type" "application/json"}
+                                 :body           request-json
+                                 :socket-timeout timeout
+                                 :conn-timeout   timeout})]
 
-(defn send-payment [endpoint, timeout, request, requestedAt]
-  (let [body (json-to-map request)]
-    (let [request-json (build-body body requestedAt)]
-      (println "Processing payment with Request JSON:" request-json)
-      (let [response (client/post endpoint
-                                  {:headers        {"Content-Type" "application/json"}
-                                   :body           request-json
-                                   :socket-timeout timeout
-                                   :conn-timeout   timeout})]
+      (println "Status:" (:status response))
+      (println "Body:" (cheshire/parse-string (:body response) true))
+      {:correlationId (:correlationId body)
+       :amount        (:amount body)
+       :requestedAt   requestedAt})))
 
-        (println "Status:" (:status response))
-        (println "Body:" (cheshire/parse-string (:body response) true))
-        {:correlationId (:correlationId body)
-         :amount        (:amount body)
-         :requestedAt   (:requestedAt body)}))))
-
-(defn send-payment-to-default [request, requestedAt]
+(defn send-payment-to-default [body, requestedAt]
   (println "Using default payment processor")
   (send-payment PAYMENT_PROCESSOR_DEFAULT_ENDPOINT
-                PAYMENT_PROCESSOR_DEFAULT_TIMEOUT request requestedAt))
+                PAYMENT_PROCESSOR_DEFAULT_TIMEOUT body requestedAt))
 
-(defn send-payment-to-fallback [request, requestedAt]
+(defn send-payment-to-fallback [body, requestedAt]
   (println "Using fallback payment processor")
   (send-payment PAYMENT_PROCESSOR_FALLBACK_ENDPOINT
-                PAYMENT_PROCESSOR_FALLBACK_TIMEOUT request requestedAt))
+                PAYMENT_PROCESSOR_FALLBACK_TIMEOUT body requestedAt))

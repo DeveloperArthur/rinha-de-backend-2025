@@ -81,3 +81,7 @@ ALTER TABLE sync_pendents_payments
 
 ALTER TABLE sync_pendents_payments
 DROP COLUMN request_body;
+
+
+ALTER TABLE processed_payments
+DROP COLUMN is_processed;

@@ -91,7 +91,7 @@ services:
       PGADMIN_DEFAULT_EMAIL: "arthur@tatay.com"
       PGADMIN_DEFAULT_PASSWORD: "123456"
     ports:
-      - "54321:80"
+      - "54323:80"
     depends_on:
       - postgres
 

@@ -1,6 +1,5 @@
 (ns rinha-de-backend-2025.database
-  (:require [next.jdbc :as jdbc]
-            [cheshire.core :as cheshire]))
+  (:require [next.jdbc :as jdbc]))
 
 (def db-config
   {:dbtype   "postgresql"
@@ -18,18 +17,14 @@
                            " (:amount response) ")")])
   (println "Saving processed payment to the database..."))
 
-(defn json-to-map [request]
-  (cheshire/parse-string (slurp (:body request)) true))
-
-(defn save-pendent-payment [request]
+(defn save-pendent-payment [body]
   ;nao posso salvar o processor_name pq nao sei qual vai ser
   ; nao posso salvar o processed_at pq nao sei quando vai ser
   ; correlationId eu preciso pra enviar depois
   ;com correlatioid e amount, na hora de processar eu gero a data e envio, deu certo? persisto no banco e ja era
-  (let [body (json-to-map request)]
-    (jdbc/execute! db [(str "INSERT INTO sync_pendents_payments (correlation_id, amount)
-                            VALUES ('" (:correlationId body) "'," (:amount body) ")")]))
-    (println "Saving pendent payment to sync background..."))
+  (jdbc/execute! db [(str "INSERT INTO sync_pendents_payments (correlation_id, amount)
+                            VALUES ('" (:correlationId body) "'," (:amount body) ")")])
+  (println "Saving pendent payment to sync background..."))
 
 (defn get-payments-summary []
   ; filtrando por processed_at tras todos os que tem processor_name "default", conta todos os registros, e soma todos os amount
