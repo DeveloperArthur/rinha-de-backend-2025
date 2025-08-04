@@ -9,4 +9,4 @@
       (Thread/sleep 120000)                                 ; 2 minutes
       (recur))))
 
-;(start-cron)
+(start-cron)

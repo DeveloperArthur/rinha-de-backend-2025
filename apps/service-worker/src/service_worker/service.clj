@@ -8,22 +8,18 @@
      :correlation_id (str (:sync_pendents_payments/correlation_id record-payment))
      :amount         (:sync_pendents_payments/amount record-payment)
      :requestedAt    requestedAt
-     :processor-name processor-name}))
+     :processor_name processor-name}))
 
 (defn handle-payments [send-payment processor-name]
-  (let [pendent-payments (database/get-pendents-payments)]
-    (when (seq pendent-payments)
-      (doseq [record-payment pendent-payments]
+  (println "Get pendents payments from database")
+  (let [pendents-payments (database/get-pendents-payments)]
+    (println "Quantity of pendents payments:" (.length pendents-payments))
+    (when (seq pendents-payments)
+      (doseq [record-payment pendents-payments]
         (let [payment (build-payment-map record-payment processor-name)]
-          (println payment)
-          ;(println (:sync_pendents_payments/id payment))
-          ;(println (str (:sync_pendents_payments/correlation_id payment)))
-          ;(println (:sync_pendents_payments/amount payment))
-          (send-payment payment)                ; correlation_id, amount, requestedAt
-          (database/save-processed-payment payment) ; processor_name, requestedAt , amount
-          (database/delete-pendent-payment (:id payment))))))) ; id
-
-(handle-payments gateway/send-payment-to-default "default")
+          (send-payment payment)
+          (database/save-processed-payment payment)
+          (database/delete-pendent-payment (:id payment)))))))
 
 (defn process-pendents-payments []
   (if (= true (gateway/check-default-health))

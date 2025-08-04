@@ -21,4 +21,5 @@
   (println "Saving processed payment to the database..."))
 
 (defn delete-pendent-payment [id]
-  (jdbc/execute! db ["DELETE FROM sync_pendents_payments WHERE id = " id]))
+  (println "Deleting pendent payment with ID:" id)
+  (jdbc/execute! db [(str "DELETE FROM sync_pendents_payments WHERE id = " id)]))
