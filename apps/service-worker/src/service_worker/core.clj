@@ -1,12 +1,20 @@
 (ns service-worker.core
-  (:require [service-worker.service :as service]))
+  (:require [service-worker.service :as service]
+            [io.pedestal.http :as http]))
 
-(defn start-cron []
+(def service-map {::http/routes []
+                  ::http/port   8083
+                  ::http/type   :jetty
+                  ::http/join?  false})
+
+(defn start-scheduler []
   (future
-    (loop []
-      (println "Starting pendents payments processing at " (.toString (java.time.Instant/now)))
-      (service/process-pendents-payments)
-      (Thread/sleep 120000)                                 ; 2 minutes
-      (recur))))
+    (while true
+      (do
+        (println "Starting pendents payments processing at " (.toString (java.time.Instant/now)))
+        (service/process-pendents-payments)
+        (Thread/sleep 120000)))))
 
-(start-cron)
+(http/start (http/create-server service-map))
+(println "Started server http")
+(start-scheduler)

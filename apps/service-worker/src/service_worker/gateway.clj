@@ -14,20 +14,21 @@
                               :conn-timeout   timeout})]
 
     (let [response-body (cheshire/parse-string (:body response) true)]
-      ; se failing = true, o serviço está down
-      (not (:failing response-body)))))
+      (:failing response-body))))
 
 (defn check-default-health []
   (let [response (verify-payment-processor-health PAYMENT_PROCESSOR_DEFAULT_ENDPOINT
                                                   PAYMENT_PROCESSOR_DEFAULT_TIMEOUT)]
     (println "Default payment processor health check response:" response)
-    response))
+    ; se failing = true, o serviço está down
+    (not response)))
 
 (defn check-fallback-health []
   (let [response (verify-payment-processor-health PAYMENT_PROCESSOR_FALLBACK_ENDPOINT
                                                   PAYMENT_PROCESSOR_FALLBACK_TIMEOUT)]
     (println "Fallback payment processor health check response:" response)
-    response))
+    ; se failing = true, o serviço está down
+    (not response)))
 
 (defn build-body [body]
   (cheshire/generate-string {:correlationId (:correlation_id body)

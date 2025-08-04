@@ -16,6 +16,6 @@
         (service/monitoring-thread)
         (Thread/sleep 10000)))))
 
-(start-monitoring-thread)
 (http/start (http/create-server service-map))
 (println "Started server http")
+(start-monitoring-thread)
