@@ -39,15 +39,11 @@
 
 (defn verify-payment-processor-default-health []
   (println "Verifying health of payment processor default")
-  (try
-    (let [response (client/get (str PAYMENT_PROCESSOR_DEFAULT_ENDPOINT "/payments/service-health")
-                               {:socket-timeout PAYMENT_PROCESSOR_DEFAULT_TIMEOUT
-                                :conn-timeout   PAYMENT_PROCESSOR_DEFAULT_TIMEOUT})]
+  (let [response (client/get (str PAYMENT_PROCESSOR_DEFAULT_ENDPOINT "/payments/service-health")
+                             {:socket-timeout PAYMENT_PROCESSOR_DEFAULT_TIMEOUT
+                              :conn-timeout   PAYMENT_PROCESSOR_DEFAULT_TIMEOUT})]
 
-      (let [response-body (cheshire/parse-string (:body response) true)]
-        (println "Default payment processor default health check response:" (:failing response-body))
-        ; se failing = true, o serviço está down
-        (not (:failing response-body))))
-    (catch Exception e
-      ; se não conseguir conectar, assume que o serviço está down
-      false)))
+    (let [response-body (cheshire/parse-string (:body response) true)]
+      (println "Default payment processor default health check response:" (:failing response-body))
+      ; se failing = true, o serviço está down
+      (not (:failing response-body)))))
