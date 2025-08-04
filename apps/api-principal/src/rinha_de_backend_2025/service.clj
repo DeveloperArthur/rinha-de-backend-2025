@@ -46,4 +46,4 @@
       (reset! DEFAULT_IS_UP true))
     (do
       (println "Default payment processor is down, switching to fallback")
-      (swap! DEFAULT_IS_UP not))))
+      (reset! DEFAULT_IS_UP false))))
