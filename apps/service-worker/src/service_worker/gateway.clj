@@ -14,7 +14,8 @@
                               :conn-timeout   timeout})]
 
     (let [response-body (cheshire/parse-string (:body response) true)]
-      (:failing response-body))))
+      ; se failing = true, o serviço está down
+      (not (:failing response-body)))))
 
 (defn check-default-health []
   (let [response (verify-payment-processor-health PAYMENT_PROCESSOR_DEFAULT_ENDPOINT
