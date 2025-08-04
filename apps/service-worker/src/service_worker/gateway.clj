@@ -52,7 +52,7 @@
   (send-payment PAYMENT_PROCESSOR_DEFAULT_ENDPOINT
                 PAYMENT_PROCESSOR_DEFAULT_TIMEOUT body))
 
-(defn send-payment-to-fallback [body, requestedAt]
+(defn send-payment-to-fallback [body]
   (println "Using fallback payment processor")
   (send-payment PAYMENT_PROCESSOR_FALLBACK_ENDPOINT
                 PAYMENT_PROCESSOR_FALLBACK_TIMEOUT body))
