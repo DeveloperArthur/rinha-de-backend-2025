@@ -39,7 +39,11 @@
    :body    "Payments summary retrieved successfully"})
 
 ; Thread de Monitoramento
-(defn background-sync []
-  ;(reset! DEFAULT_IS_UP true)
-  ;(swap! DEFAULT_IS_UP not)
-  )
+(defn monitoring-thread []
+  (if (= true (gateway/verify-payment-processor-default-health))
+    (do
+      (println "Default payment processor is up")
+      (reset! DEFAULT_IS_UP true))
+    (do
+      (println "Default payment processor is down, switching to fallback")
+      (swap! DEFAULT_IS_UP not))))

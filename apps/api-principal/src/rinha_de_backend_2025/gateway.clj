@@ -2,8 +2,8 @@
   (:require [clj-http.client :as client]
             [cheshire.core :as cheshire]))
 
-(def PAYMENT_PROCESSOR_DEFAULT_ENDPOINT "http://localhost:8001/payments")
-(def PAYMENT_PROCESSOR_FALLBACK_ENDPOINT "http://localhost:8002/payments")
+(def PAYMENT_PROCESSOR_DEFAULT_ENDPOINT "http://localhost:8001")
+(def PAYMENT_PROCESSOR_FALLBACK_ENDPOINT "http://localhost:8002")
 (def PAYMENT_PROCESSOR_DEFAULT_TIMEOUT 1500)
 (def PAYMENT_PROCESSOR_FALLBACK_TIMEOUT 2000)
 
@@ -15,7 +15,7 @@
 (defn send-payment [endpoint, timeout, body, requestedAt]
   (let [request-json (build-body body requestedAt)]
     (println "Processing payment with Request JSON:" request-json)
-    (let [response (client/post endpoint
+    (let [response (client/post (str endpoint "/payments")
                                 {:headers        {"Content-Type" "application/json"}
                                  :body           request-json
                                  :socket-timeout timeout
@@ -36,3 +36,18 @@
   (println "Using fallback payment processor")
   (send-payment PAYMENT_PROCESSOR_FALLBACK_ENDPOINT
                 PAYMENT_PROCESSOR_FALLBACK_TIMEOUT body requestedAt))
+
+(defn verify-payment-processor-default-health []
+  (println "Verifying health of payment processor default")
+  (try
+    (let [response (client/get (str PAYMENT_PROCESSOR_DEFAULT_ENDPOINT "/payments/service-health")
+                               {:socket-timeout PAYMENT_PROCESSOR_DEFAULT_TIMEOUT
+                                :conn-timeout   PAYMENT_PROCESSOR_DEFAULT_TIMEOUT})]
+
+      (let [response-body (cheshire/parse-string (:body response) true)]
+        (println "Default payment processor default health check response:" (:failing response-body))
+        ; se failing = true, o serviço está down
+        (not (:failing response-body))))
+    (catch Exception e
+      ; se não conseguir conectar, assume que o serviço está down
+      false)))

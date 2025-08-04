@@ -18,10 +18,6 @@
   (println "Saving processed payment to the database..."))
 
 (defn save-pendent-payment [body]
-  ;nao posso salvar o processor_name pq nao sei qual vai ser
-  ; nao posso salvar o processed_at pq nao sei quando vai ser
-  ; correlationId eu preciso pra enviar depois
-  ;com correlatioid e amount, na hora de processar eu gero a data e envio, deu certo? persisto no banco e ja era
   (jdbc/execute! db [(str "INSERT INTO sync_pendents_payments (correlation_id, amount)
                             VALUES ('" (:correlationId body) "'," (:amount body) ")")])
   (println "Saving pendent payment to sync background..."))
