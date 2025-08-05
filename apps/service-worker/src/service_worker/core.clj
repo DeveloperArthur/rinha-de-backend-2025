@@ -13,10 +13,10 @@
       (try
         (println "Starting pendents payments processing at " (.toString (java.time.Instant/now)))
         (service/process-pendents-payments)
-        (Thread/sleep 20000)
+        (Thread/sleep 120000)
         (catch Exception e
           (println "Error processing pendents payments:" (.getMessage e))
-          (Thread/sleep 20000))))))
+          (Thread/sleep 120000))))))
 
 (http/start (http/create-server service-map))
 (println "Started server http")
