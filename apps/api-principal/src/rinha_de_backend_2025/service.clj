@@ -33,10 +33,27 @@
       (try-send-payment gateway/send-payment-to-fallback request (.toString requestedAt) "fallback"))))
 
 (defn get-payments-summary [request]
-  (println (:body request))
-  {:status  200
-   :headers {"Content-Type" "application/json"}
-   :body    "Payments summary retrieved successfully"})
+  (let [from (get-in request [:query-params :from])
+        to (get-in request [:query-params :to])]
+    (let [payments-summary (database/get-payments-summary from to)]
+      (if (> (.length payments-summary) 0)
+        (do
+          (let [first-item (nth payments-summary 0)
+                second-item (nth payments-summary 1)]
+            {:status  200
+             :headers {"Content-Type" "application/json"}
+             :body    (cheshire/generate-string
+                        {(:processed_payments/processor_name first-item)
+                         {:totalRequests (:total_requests first-item)
+                          :totalAmount   (:total_amount first-item)}
+                         (:processed_payments/processor_name second-item)
+                         {:totalRequests (:total_requests second-item)
+                          :totalAmount   (:total_amount second-item)}})}))
+        ;else
+        (do
+          {:status  200
+           :headers {"Content-Type" "application/json"}
+           :body    {}})))))
 
 ; Thread de Monitoramento
 (defn monitoring-thread []

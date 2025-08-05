@@ -22,22 +22,24 @@
                             VALUES ('" (:correlationId body) "'," (:amount body) ")")])
   (println "Saving pendent payment to sync background..."))
 
-(defn get-payments-summary []
-  ; filtrando por processed_at tras todos os que tem processor_name "default", conta todos os registros, e soma todos os amount
-  ; repete a mesma query com fallback
+(defn blank-or-nil? [s]
+  (or (nil? s) (= s "")))
 
-  ;monta o json
-
-  ;HTTP 200 - Ok
-  ;{
-  ; "default" : {
-  ;              "totalRequests": 43236,
-  ;              "totalAmount": 415542345.98
-  ;              },
-  ; "fallback" : {
-  ;               "totalRequests": 423545,
-  ;               "totalAmount": 329347.34
-  ;               }
-  ; }
-
-  )
+;; Se `from` for null ou "", assume 5 minutos antes do `now`.
+;; Se `to` for null ou "", assume o instante atual (`now`).
+(defn get-payments-summary [from to]
+  (let [now (java.time.Instant/now)
+        from (if (blank-or-nil? from)
+               (.toString (.minus now (java.time.Duration/ofMinutes 5)))
+               from)
+        to (if (blank-or-nil? to)
+             (.toString (.minus now (java.time.Duration/ofMinutes 5)))
+             to)
+        query (str "SELECT processor_name,
+                      COUNT(*) AS total_requests,
+                      ROUND(SUM(amount)::numeric, 2) AS total_amount
+                    FROM processed_payments
+                    WHERE processed_at BETWEEN '" from "' AND '" to "'
+                    GROUP BY processor_name")]
+    (let [payments-summary (jdbc/execute! db [query])]
+      payments-summary)))
