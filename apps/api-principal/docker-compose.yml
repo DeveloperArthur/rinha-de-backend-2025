@@ -1,3 +1,6 @@
+#docker-compose build --no-cache
+#docker-compose up
+
 x-service-templates:
   payment-processor: &payment-processor
     image: zanfranceschi/payment-processor:arm64-20250707101540
@@ -99,7 +102,7 @@ services:
       - payment-processor
 
   service-worker:
-    build: .
+    build: ../service-worker
     ports:
       - "8082:8080"
     depends_on:
@@ -135,6 +138,25 @@ services:
       - clojure-instance-2
     networks:
       - payment-processor
+
+#  pgadmin-compose:
+#    image: dpage/pgadmin4
+#    environment:
+#      PGADMIN_DEFAULT_EMAIL: "arthur@tatay.com"
+#      PGADMIN_DEFAULT_PASSWORD: "123456"
+#    ports:
+#      - "54323:80"
+#    depends_on:
+#      - postgres
+#    networks:
+#      - payment-processor
+# Para configurar o banco de dados acesse http://localhost:54321/browser/
+# faça login com as credenciais que estão no `docker-compose` e crie um server
+# Na aba de connections preencha:
+# - maintenance database, username e password com o valor "root"
+# - port tem o valor "5432"
+# - para preencher host você precisa executar `docker-compose exec postgres sh` pra entrar no container
+#   e executar `hostname -i` para pegar o host e preencha o campo de host
 
 networks:
   payment-processor:
