@@ -15,7 +15,7 @@
       (do
         (println "Starting Monitoring Thread at " (.toString (java.time.Instant/now)))
         (service/monitoring-thread)
-        (Thread/sleep 5000)))))
+        (Thread/sleep 6000)))))
 
 (defn -main [& args]
   (http/start (http/create-server service-map))
