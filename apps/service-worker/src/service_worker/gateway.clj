@@ -2,8 +2,8 @@
   (:require [clj-http.client :as client]
             [cheshire.core :as cheshire]))
 
-(def PAYMENT_PROCESSOR_DEFAULT_ENDPOINT "http://localhost:8001")
-(def PAYMENT_PROCESSOR_FALLBACK_ENDPOINT "http://localhost:8002")
+(def PAYMENT_PROCESSOR_DEFAULT_ENDPOINT "http://payment-processor-default:8080")
+(def PAYMENT_PROCESSOR_FALLBACK_ENDPOINT "http://payment-processor-fallback:8080")
 (def PAYMENT_PROCESSOR_DEFAULT_TIMEOUT 1500)
 (def PAYMENT_PROCESSOR_FALLBACK_TIMEOUT 2000)
 
