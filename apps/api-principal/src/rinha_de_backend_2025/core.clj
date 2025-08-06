@@ -5,8 +5,9 @@
 
 (def service-map {::http/routes routes/endpoints
                   ::http/port   8080
+                  ::http/host   "0.0.0.0"
                   ::http/type   :jetty
-                  ::http/join?  false})                     ; deixo false mesmo???
+                  ::http/join?  false})
 
 (defn start-monitoring-thread []
   (future

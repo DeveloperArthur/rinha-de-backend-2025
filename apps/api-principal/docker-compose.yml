@@ -28,7 +28,7 @@ x-service-templates:
 
 services:
 
-# COMPONENTES TERCEIROS
+  # COMPONENTES TERCEIROS
 
   payment-processor-1:
     <<: *payment-processor
@@ -72,7 +72,27 @@ services:
     ports:
       - 54322:5432
 
-# MEUS COMPONENTES
+  # MEUS COMPONENTES
+
+  clojure-instance:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    restart: on-failure
+#    networks:
+#      - nginx_net
+
+  clojure-instance-2:
+    build: .
+    ports:
+      - "8081:8080"
+    depends_on:
+      - postgres
+    restart: on-failure
+#    networks:
+#      - nginx_net
 
   postgres:
     image: "postgres"
