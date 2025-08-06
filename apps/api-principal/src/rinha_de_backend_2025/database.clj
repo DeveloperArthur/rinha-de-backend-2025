@@ -4,7 +4,7 @@
 (def db-config
   {:dbtype   "postgresql"
    :dbname   "root"
-   :host     "localhost"
+   :host     "postgres"
    :user     "root"
    :password "root"})
 

@@ -80,9 +80,11 @@ services:
       - "8080:8080"
     depends_on:
       - postgres
+      - payment-processor-1
+      - payment-processor-2
     restart: on-failure
-#    networks:
-#      - nginx_net
+    networks:
+      - payment-processor
 
   clojure-instance-2:
     build: .
@@ -90,9 +92,11 @@ services:
       - "8081:8080"
     depends_on:
       - postgres
+      - payment-processor-1
+      - payment-processor-2
     restart: on-failure
-#    networks:
-#      - nginx_net
+    networks:
+      - payment-processor
 
   postgres:
     image: "postgres"
