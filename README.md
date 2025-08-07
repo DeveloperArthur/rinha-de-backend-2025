@@ -18,6 +18,15 @@ Desenvolvi uma espécie de Circuit Breaker com Thread de Monitoramento e Backgro
 
 ![obj](assets/arquitetura.jpeg)
 
+# Distribuição de recursos
+| Serviço          | CPU (vCPU) | Memória (RAM) |
+| ---------------- | ---------- | ------------- |
+| Nginx            | 0.15       | 40 MB         |
+| API Principal 01 | 0.45       | 90 MB         |
+| API Principal 02 | 0.45       | 90 MB         |
+| Service Worker   | 0.15       | 30 MB         |
+| PostgreSQL       | 0.30       | 100 MB        |
+
 ## Arquitetura Lógica 
 
 ### Thread de Monitoramento
