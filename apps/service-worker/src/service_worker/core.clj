@@ -14,10 +14,10 @@
       (try
         (println "Starting pendents payments processing at " (.toString (java.time.Instant/now)))
         (service/process-pendents-payments)
-        (Thread/sleep 5000)
+        (Thread/sleep 10000)
         (catch Exception e
           (println "Error processing pendents payments:" (.getMessage e))
-          (Thread/sleep 5000))))))
+          (Thread/sleep 10000))))))
 
 (defn -main [& args]
   (http/start (http/create-server service-map))
