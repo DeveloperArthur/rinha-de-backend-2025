@@ -1,4 +1,5 @@
 (ns rinha-de-backend-2025.core
+  (:gen-class)
   (:require [io.pedestal.http :as http]
             [rinha-de-backend-2025.routes :as routes]
             [rinha-de-backend-2025.service :as service]))

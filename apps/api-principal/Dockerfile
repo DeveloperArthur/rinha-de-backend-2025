@@ -1,26 +1,17 @@
 # docker build -t clojure-instance .
 # docker run -p 8080:8080 clojure-instance
+# docker buildx build --platform=linux/amd64 -t developerarthur/rinha-backend3-api-principal:latest .
+# docker push developerarthur/rinha-backend3-api-principal:latest
 
-# Use uma imagem base com o JDK
-FROM openjdk:17-jdk-slim
-
-# Instale o Leiningen
-RUN apt-get update && apt-get install -y curl && \
-    curl -o /usr/local/bin/lein https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein && \
-    chmod +x /usr/local/bin/lein && \
-    lein
-
-# Defina o diretório de trabalho
+# Stage 1: Build
+FROM clojure:temurin-21-lein AS builder
 WORKDIR /app
+COPY . .
+RUN lein uberjar
 
-# Copie os arquivos do projeto para o container
-COPY . /app
-
-# Instale as dependências do projeto
-RUN lein deps
-
-# Exponha a porta usada pela aplicação
+# Stage 2: Runtime
+FROM eclipse-temurin:21-jre-alpine
+WORKDIR /app
+COPY --from=builder /app/target/*-standalone.jar app.jar
 EXPOSE 8080
-
-# Comando para iniciar a aplicação
-CMD ["lein", "run"]
+CMD ["java", "-jar", "app.jar"]
