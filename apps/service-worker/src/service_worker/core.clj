@@ -1,4 +1,5 @@
 (ns service-worker.core
+  (:gen-class)
   (:require [service-worker.service :as service]
             [io.pedestal.http :as http]))
 
