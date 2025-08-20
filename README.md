@@ -61,11 +61,6 @@ Teremos um Service Worker responsável por fazer o **Background Sync**, irá rod
 
 ![obj](assets/service-worker.png)
 
-
-# Resultado final
-
-![obj](assets/resultado.png)
-
 ## Case no tempo de build
 
 Quando minha solução estava rodando nos resultados parciais, os containers do backend estavam demorando +10 segundos para subir, o problema estava na forma como eu conteinerizei a aplicação Clojure ([Dockerfile](https://github.com/DeveloperArthur/rinha-de-backend-2025/blob/be8d333cd8d9fdff2ea72ee4f5dc4e13cbb35e65/apps/api-principal/Dockerfile))
@@ -73,6 +68,12 @@ Quando minha solução estava rodando nos resultados parciais, os containers do 
 Rodar com `lein run` não é a melhor maneira, pois ele carrega o Clojure, compila o código todo e baixa todas as dependências no runtime
 
 Com ajuda do @rektryan, fiz diversas otimizações, reescrevi o [Dockerfile](https://github.com/DeveloperArthur/rinha-de-backend-2025/blob/main/apps/api-principal/Dockerfile), fiz AOT na aplicação, ao startar, o container buida, gera o `.jar` e executa `java -jar app.java`, com isso a aplicação começou a subir instantâneo
+
+# Resultado final
+
+![obj](assets/resultado.png)
+
+Zerei na pontuação, mas sei exatamente o motivo, veja no Postmortein abaixo
 
 ## Postmortein
 
@@ -82,7 +83,7 @@ Por isso eu achei melhor deixar o processo todo **síncrono**: recebia a request
 
 Nos logs do container é possível ver que todos os pagamentos foram processados com sucesso, mas a janela de resposta do K6 foi muito curta, por causa disso todas as requests resultaram em timeout, eu não contava com isso
 
-### Possível solução Reativa
+## Possível solução Reativa
 
 Eu poderia resolver esse problema deixando meu endpoint **não bloqueante**, em um conceito semelhante ao **Reativo**: Criando uma nova thread para todo o processo síncrono e respondendo instantaneamente 200 OK para o K6:
 
